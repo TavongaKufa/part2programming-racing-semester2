@@ -1,0 +1,52 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  # Part 1 – checks the repository structure and planning documents
+  docs-check:
+    name: Check repository structure and /docs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: /docs folder contains the planning documents
+        run: |
+          test -d docs
+          test -f docs/ERD.png
+          test -f docs/API-Endpoint-Plan.md
+          test -f docs/RaceDay.sql
+          echo "All required /docs files are present."
+
+      - name: README contains the required sections
+        run: |
+          grep -qi "setup" README.md
+          grep -qi "organiser" README.md
+          grep -qi "participant" README.md
+          grep -qi "youtube" README.md
+          if grep -q "REPLACE_ME" README.md; then
+            echo "::warning::README still contains REPLACE_ME placeholders (video link / CI screenshot)."
+          fi
+
+  # Part 2 – builds the API and runs every unit test on each push
+  build-and-test:
+    name: Build and run unit tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Restore
+        run: dotnet restore Part2-API/RaceDay.sln
+
+      - name: Build
+        run: dotnet build Part2-API/RaceDay.sln --configuration Release --no-restore
+
+      - name: Test
+        run: dotnet test Part2-API/RaceDay.sln --configuration Release --no-build --verbosity normal
