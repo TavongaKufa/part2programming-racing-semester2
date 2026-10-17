@@ -11,12 +11,11 @@ This repository holds the Portfolio of Evidence:
 | 3 | MVC web app, Azure Blob Storage, Docker | added later |
 
 ## Video presentation
-
-Part 2 walkthrough (unlisted YouTube): REPLACE_ME_YOUTUBE_LINK
+https://youtu.be/0AQZPUt3nco?si=j4CkB0jNxWw1NEYF
 
 ## CI/CD – green build
 
-![Green GitHub Actions build](docs/ci-green-build.png)
+<img width="1366" height="777" alt="ci-green-build" src="https://github.com/user-attachments/assets/b8e503e2-ae55-4a42-ba4e-182583c72880" />
 
 (Screenshot of the passing workflow in `.github/workflows/ci.yml`: REPLACE_ME until docs/ci-green-build.png is added.)
 
@@ -61,10 +60,11 @@ The tests start the real API in memory with an EF Core InMemory database (no SQL
 
 - **Session-based authentication:** ASP.NET Core session stores `UserId` and `Role` at login; a `[SessionAuthorize]` filter checks it on every protected endpoint.
 - **Passwords** are hashed with ASP.NET Core Identity's `PasswordHasher` (PBKDF2); plain text is never stored.
-- **Role choice at registration:** the user selects Organiser or Participant when registering, as required by the brief.
+- **Role choice at registration:** the user selects Organiser or Participant when registering, as required by the brief
+.
 - **Swagger:** every endpoint is documented with XML comments (purpose, expected data, response codes).
 - **Errors** are returned as clean `ProblemDetails` JSON – no stack traces.
 
 ## AI disclosure
 
-AI assistance (Claude by Anthropic) was used to help plan and draft the code, tests and documentation in this repository. I reviewed, ran and tested everything and explain it in my own words in the video. *(Edit this paragraph so it accurately reflects how you used AI.)*
+AI assistance (Claude by Anthropic) was used to help plan and draft the code, tests and documentation in this repository. I reviewed, ran and tested everything and explain it in my own words in the video. 
